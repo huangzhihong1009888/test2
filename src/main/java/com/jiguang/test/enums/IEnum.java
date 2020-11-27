@@ -4,4 +4,5 @@ public interface IEnum<T,D> {
     D getValue();
     T getType();
 
+
 }
