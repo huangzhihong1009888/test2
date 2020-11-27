@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiguang.test.mapper.ApiMapper">
+    <resultMap id="apiMap" type="com.jiguang.test.model.Api">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="num" jdbcType="INTEGER" property="num"/>
+    </resultMap>
+
+
+    <select id="getApi" resultType="map">
+        select * from stu where id =1
+    </select>
+    <insert id="add">
+        INSERT INTO `test`.`city`(city, `area`) VALUES ( #{city.city}, #{city.area});
+    </insert>
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiguang.test.imp.MarketHistoryMapper">
+    <sql id="tableName">
+        market_history
+    </sql>
+
+    <sql id="baseColumn">
+        id,tenant_id,type,obj_id,operator_id,operator_name,content,create_time,update_time
+    </sql>
+
+</mapper>

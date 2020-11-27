@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiguang.test.impl.MemberCardBatchMapper">
+    <sql id="tableName">
+        member_card_batch
+    </sql>
+
+    <sql id="baseColumn">
+        id,tenant_id,orig_id,type,name,img,money_threshold,gived_money,share_gived_money,share_count,discount,discount_rule,share_discount,service_ids,terminal,valid_period,can_delay,max_delay_count,delay_month,product_id,status,creator,creator_name,total_count,create_time,updator,updator_name,update_time
+    </sql>
+
+</mapper>

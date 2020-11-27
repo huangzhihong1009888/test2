@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiguang.test.dao.SetMealImDao">
+  <resultMap id="BaseResultMap" type="com.jiguang.test.model.SetMealIm">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="tenant_id" jdbcType="INTEGER" property="tenantId" />
+    <result column="doctor_id" jdbcType="VARCHAR" property="doctorId" />
+    <result column="patient_id" jdbcType="VARCHAR" property="patientId" />
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="status" jdbcType="BOOLEAN" property="status" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="doctor_id_type" jdbcType="TINYINT" property="doctorIdType" />
+    <result column="set_meal_id" jdbcType="VARCHAR" property="setMealId" />
+    <result column="set_meal_type" jdbcType="VARCHAR" property="setMealType" />
+    <result column="set_meal_name" jdbcType="VARCHAR" property="setMealName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tenant_id, doctor_id, patient_id, group_id, `status`, last_time, create_time, 
+    modify_time, doctor_id_type, set_meal_id, set_meal_type, set_meal_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from set_meal_im
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from set_meal_im
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jiguang.test.model.SetMealIm" useGeneratedKeys="true">
+    insert into set_meal_im (tenant_id, doctor_id, patient_id, 
+      group_id, `status`, last_time, 
+      create_time, modify_time, doctor_id_type, 
+      set_meal_id, set_meal_type, set_meal_name
+      )
+    values (#{tenantId,jdbcType=INTEGER}, #{doctorId,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR}, 
+      #{groupId,jdbcType=VARCHAR}, #{status,jdbcType=BOOLEAN}, #{lastTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{doctorIdType,jdbcType=TINYINT}, 
+      #{setMealId,jdbcType=VARCHAR}, #{setMealType,jdbcType=VARCHAR}, #{setMealName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jiguang.test.model.SetMealIm" useGeneratedKeys="true">
+    insert into set_meal_im
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+      <if test="doctorId != null">
+        doctor_id,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="doctorIdType != null">
+        doctor_id_type,
+      </if>
+      <if test="setMealId != null">
+        set_meal_id,
+      </if>
+      <if test="setMealType != null">
+        set_meal_type,
+      </if>
+      <if test="setMealName != null">
+        set_meal_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null">
+        #{doctorId,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BOOLEAN},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doctorIdType != null">
+        #{doctorIdType,jdbcType=TINYINT},
+      </if>
+      <if test="setMealId != null">
+        #{setMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealType != null">
+        #{setMealType,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealName != null">
+        #{setMealName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jiguang.test.model.SetMealIm">
+    update set_meal_im
+    <set>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null">
+        doctor_id = #{doctorId,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null">
+        patient_id = #{patientId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BOOLEAN},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doctorIdType != null">
+        doctor_id_type = #{doctorIdType,jdbcType=TINYINT},
+      </if>
+      <if test="setMealId != null">
+        set_meal_id = #{setMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealType != null">
+        set_meal_type = #{setMealType,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealName != null">
+        set_meal_name = #{setMealName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jiguang.test.model.SetMealIm">
+    update set_meal_im
+    set tenant_id = #{tenantId,jdbcType=INTEGER},
+      doctor_id = #{doctorId,jdbcType=VARCHAR},
+      patient_id = #{patientId,jdbcType=VARCHAR},
+      group_id = #{groupId,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BOOLEAN},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      doctor_id_type = #{doctorIdType,jdbcType=TINYINT},
+      set_meal_id = #{setMealId,jdbcType=VARCHAR},
+      set_meal_type = #{setMealType,jdbcType=VARCHAR},
+      set_meal_name = #{setMealName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
