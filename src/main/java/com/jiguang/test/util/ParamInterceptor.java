@@ -20,7 +20,7 @@ import java.util.Properties;
  * @author HuangZhiHong
  * @create 2020/10/20 19:58
  **/
-@Intercepts({@Signature(type = Executor.class,method = "update",args = {MappedStatement.class,Object.class})})
+@Intercepts({@Signature(type = Executor.class,method = "query",args = {MappedStatement.class,Object.class})})
 @Component
 public class ParamInterceptor implements Interceptor {
     private static final String TENANT_ID = "tenantId";

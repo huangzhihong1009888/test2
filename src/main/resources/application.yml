@@ -8,3 +8,17 @@ spring:
     active: dev,db
 
 
+  jpa:
+    properties:
+      hibernate:
+        session_factory:
+          statement_inspector: com.jiguang.test.util.JpaInterceptor
+    show-sql: true
+
+
+mybatis-plus:
+  mapper-locations: classpath:mybatis/*.xml
+  type-aliases-package: com.jiguang.test.entity
+mybatis:
+  mapper-locations: classpath:mybatis/*.xml
+  type-aliases-package: com.jiguang.test.entity

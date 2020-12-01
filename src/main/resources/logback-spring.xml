@@ -69,13 +69,15 @@
     </appender>
 
     <!--过滤掉spring和hibernate的一些无用的debug信息-->
-    <logger name="org.springframework" level="INFO"/>
+    <logger name="com.jiguang.test.dao" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
 
     <!-- 默认 -->
-    <root level="INFO">
+    <root level="info">
         <appender-ref ref="CONSOLE" />
     </root>
-    <!-- 日志输出级别 -->
+    <!-- 日志输出级别
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="FILE" />
@@ -95,6 +97,6 @@
             <appender-ref ref="FILE" />
             <appender-ref ref="ERROR_FILE" />
         </root>
-    </springProfile>
+    </springProfile>-->
 
 </configuration>

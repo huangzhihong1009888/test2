@@ -28,7 +28,7 @@ public class JpaEntity {
     private SetMealEnum setMealEnum;
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     /**
      * 名字
      */
@@ -40,7 +40,7 @@ public class JpaEntity {
 
     @Transient
     private String test;
-
+    private String tenantId;
 
 
 }

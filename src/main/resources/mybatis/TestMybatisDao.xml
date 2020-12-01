@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiguang.test.dao.mybatis.TestMybatisDao">
+  <resultMap id="BaseResultMap" type="com.jiguang.test.entity.JpaEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tenant_id" jdbcType="INTEGER" property="tenantId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="set_meal_enum" jdbcType="VARCHAR" property="setMealEnum" />
+  </resultMap>
+
+  <select id="findByNames" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    *
+    from jpa_table
+    where `name` = #{name}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from jpa_table
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="save" keyColumn="id" keyProperty="id" parameterType="com.jiguang.test.entity.JpaEntity" useGeneratedKeys="true">
+    insert into jpa_table ( name, value)
+    values ( #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR} )
+  </insert>
+  <update id="update" parameterType="com.jiguang.test.entity.JpaEntity">
+    update jpa_table
+    set
+      name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
