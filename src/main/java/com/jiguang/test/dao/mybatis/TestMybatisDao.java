@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface TestMybatisDao {
-    List<JpaEntity> findByNames(String name);
+    JpaEntity findByNames(Long name);
 
-    Object save(JpaEntity jpaEntity);
+    void save(JpaEntity jpaEntity);
 
     void deleteById(Long id);
 
-    Object update(String name);
+    void update(String name);
 }

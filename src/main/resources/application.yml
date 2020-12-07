@@ -4,10 +4,6 @@ server:
 spring:
   application:
     name: application
-  profiles:
-    active: dev,db
-
-
   jpa:
     properties:
       hibernate:
@@ -17,8 +13,5 @@ spring:
 
 
 mybatis-plus:
-  mapper-locations: classpath:mybatis/*.xml
-  type-aliases-package: com.jiguang.test.entity
-mybatis:
   mapper-locations: classpath:mybatis/*.xml
   type-aliases-package: com.jiguang.test.entity

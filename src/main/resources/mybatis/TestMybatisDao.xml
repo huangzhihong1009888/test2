@@ -9,11 +9,11 @@
     <result column="set_meal_enum" jdbcType="VARCHAR" property="setMealEnum" />
   </resultMap>
 
-  <select id="findByNames" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="findByNames" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     *
     from jpa_table
-    where `name` = #{name}
+    where id = #{name}
   </select>
   <delete id="deleteById" parameterType="java.lang.Long">
     delete from jpa_table

@@ -17,13 +17,9 @@ public class MybatisController {
     @Resource
     private MybatisService mybatisService;
     @GetMapping("/get")
-    public Object get(String name){
-        try {
-            return mybatisService.findByName(name);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
+    public Object get(Long name){
+        return mybatisService.findByName(name);
+
     }
     @PostMapping("/add")
     public Object add(String name){

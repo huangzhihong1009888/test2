@@ -2,6 +2,7 @@ package com.jiguang.test.util;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.BinaryExpression;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.Parenthesis;
@@ -18,8 +19,12 @@ import net.sf.jsqlparser.statement.delete.Delete;
 import net.sf.jsqlparser.statement.insert.Insert;
 import net.sf.jsqlparser.statement.select.*;
 import net.sf.jsqlparser.statement.update.Update;
+import org.apache.commons.lang3.StringEscapeUtils;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 @Data
 @Slf4j
 public class SqlParse {
@@ -32,8 +37,22 @@ public class SqlParse {
      * 需进行租户解析的租户字段名,本项目中为固定名称
      */
     private static String tenantIdColumn = "tenant_id";
+
+    public static void main(String[] args) throws JSQLParserException {
+        String sql = "select * from member_card_batch  where name like  ? escape ? ";
+
+
+        CCJSqlParserUtil.parse(sql);
+    }
+
+    /**
+     * 不需要租户id的表
+     */
+    private static final List<String> ignoreTables = Arrays.asList();
+
     public static String parseSql(String sql){
         try {
+            tenantId = "5000";
             log.info("租户解析开始，原始SQL：{}", sql);
             Statements statements = CCJSqlParserUtil.parseStatements(sql);
             StringBuilder sqlStringBuilder = new StringBuilder();
@@ -43,7 +62,7 @@ public class SqlParse {
                     if (i++ > 0) {
                         sqlStringBuilder.append(';');
                     }
-                    sqlStringBuilder.append(SqlParse.processParser(statement,"5000"));
+                    sqlStringBuilder.append(processParser(statement));
                 }
             }
             String newSql = sqlStringBuilder.toString();
@@ -57,8 +76,7 @@ public class SqlParse {
         return null;
     }
 
-    public static String processParser(Statement statement,String value) {
-        tenantId = value;
+    public static String processParser(Statement statement) {
         if (statement instanceof Insert) {
             processInsert((Insert) statement);
         } else if (statement instanceof Select) {
@@ -75,6 +93,7 @@ public class SqlParse {
     }
 
     public static void processSelectBody(SelectBody selectBody) {
+
         if (selectBody instanceof PlainSelect) {
             processPlainSelect((PlainSelect) selectBody);
         } else if (selectBody instanceof WithItem) {
@@ -95,11 +114,19 @@ public class SqlParse {
      */
 
     public static void processInsert(Insert insert) {
+        if (ignoreTable(insert.getTable().getName())) {
+            // 过滤退出执行
+            return;
+        }
+        //判断已经有该字段 则直接return
+        boolean exists = insert.getColumns().stream().anyMatch(a -> Objects.equals(a.getColumnName(),tenantIdColumn));
+        if(exists){
+            return;
+        }
         insert.getColumns().add(new Column(tenantIdColumn));
         if (insert.getSelect() != null) {
             processPlainSelect((PlainSelect) insert.getSelect().getSelectBody(), true);
         } else if (insert.getItemsList() != null) {
-            // fixed github pull/295
             ItemsList itemsList = insert.getItemsList();
             if (itemsList instanceof MultiExpressionList) {
                 ((MultiExpressionList) itemsList).getExprList().forEach(el -> el.getExpressions().add(new StringValue(tenantId)));
@@ -117,6 +144,10 @@ public class SqlParse {
 
     public static void processUpdate(Update update) {
         final Table table = update.getTable();
+        if (ignoreTable(table.getName())) {
+            // 过滤退出执行
+            return;
+        }
         update.setWhere(andExpression(table, update.getWhere()));
     }
 
@@ -125,6 +156,10 @@ public class SqlParse {
      */
 
     public static void processDelete(Delete delete) {
+        if (ignoreTable(delete.getTable().getName())) {
+            // 过滤退出执行
+            return;
+        }
         delete.setWhere(andExpression(delete.getTable(), delete.getWhere()));
     }
 
@@ -150,6 +185,7 @@ public class SqlParse {
      * 处理 PlainSelect
      */
     protected static void processPlainSelect(PlainSelect plainSelect) {
+
         processPlainSelect(plainSelect, false);
     }
 
@@ -163,8 +199,9 @@ public class SqlParse {
         FromItem fromItem = plainSelect.getFromItem();
         if (fromItem instanceof Table) {
             Table fromTable = (Table) fromItem;
-            //#1186 github
-            plainSelect.setWhere(builderExpression(plainSelect.getWhere(), fromTable));
+            if (!ignoreTable(fromTable.getName())) {
+                plainSelect.setWhere(builderExpression(plainSelect.getWhere(), fromTable));
+            }
             if (addColumn) {
                 plainSelect.getSelectItems().add(new SelectExpressionItem(
                         new Column(tenantIdColumn)));
@@ -302,5 +339,7 @@ public class SqlParse {
         column.append(tenantIdColumn);
         return new Column(column.toString());
     }
-
+    public static boolean ignoreTable(String tableName) {
+        return ignoreTables.stream().anyMatch((t) -> t.equalsIgnoreCase(tableName));
+    }
 }

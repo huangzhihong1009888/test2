@@ -14,9 +14,6 @@ spring:
             max-pool-size: 10
             min-idle: 5
 
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/*Mapper.xml
-  typeAliasesPackage: com.kancy.data.entity
   global-config:
     db-config:
       id-type: id_worker
@@ -30,3 +27,6 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
     jdbc-type-for-null: null
+mybatis-plus:
+  mapper-locations: classpath:mybatis/*.xml
+  type-aliases-package: com.jiguang.test.entity
