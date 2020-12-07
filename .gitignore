@@ -63,12 +63,12 @@ build/
 ### VS Code ###
 .vscode/
 .mvn
-logs/
+/logs/
+/aaa:
 log.path_IS_UNDEFINED/
 *.iml
 mvnw
 *.cmd
 ProxySubject.class
-src/main/java/com/jiguang/test/service/impl/
 /.mvn/
 
