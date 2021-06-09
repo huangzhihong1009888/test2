@@ -1,7 +1,5 @@
 package com.jiguang.test.enums;
 
-import org.springframework.core.convert.converter.Converter;
-
 import javax.persistence.AttributeConverter;
 
 public class EnumConverter implements AttributeConverter<IEnum,String> {

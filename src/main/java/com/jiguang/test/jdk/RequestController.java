@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 
 /**
  * Dynamic proxy demonstration
@@ -15,7 +13,7 @@ import java.lang.reflect.Proxy;
  * @author HuangZhiHong
  * @create 2020 /8/25 18:08
  */
-public class DynamicProxyDemonstration {
+public class RequestController {
     /**
      * Main
      *
@@ -23,18 +21,20 @@ public class DynamicProxyDemonstration {
      */
     public static void main(String[] args)
     {
+
         //代理的真实对象
         Subject realSubject = new RealSubject();
+        MybatisMapperProxy<Subject> proxy = new MybatisMapperProxy(realSubject);
         /**
          * 该方法用于为指定类装载器、一组接口及调用处理器生成动态代理类实例
          */
-        Subject subject = InvocationHandlerImpl.getObject(realSubject);
+        Subject subject = proxy.newInstance(proxy);
 
         System.out.println("动态代理对象的类型："+subject.getClass().getName());
 
         String hello = subject.sayHello("执行代码");
         System.out.println(hello);
-        //createProxyClassFile();
+        createProxyClassFile();
 //        String goodbye = subject.SayGoodBye();
 //        System.out.println(goodbye);
     }
@@ -43,7 +43,7 @@ public class DynamicProxyDemonstration {
      * Create proxy class file
      */
     private static void createProxyClassFile(){
-        String name = "ProxySubject";
+        String name = "Proxy";
         byte[] data = ProxyGenerator.generateProxyClass(name,new Class[]{Subject.class});
         FileOutputStream out =null;
         try {

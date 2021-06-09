@@ -1,4 +1,4 @@
-package com.jiguang.test.controller;
+package com.jiguang.test.util.thread;
 
 /**
  * @ClassName MyThreadPrinter2
