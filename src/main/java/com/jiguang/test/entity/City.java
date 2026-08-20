@@ -44,6 +44,10 @@ public class City extends Model<City> implements Serializable {
      * name
      */
     private String name;
+    /**
+     * address
+     */
+    private String address;
 
 
 }
