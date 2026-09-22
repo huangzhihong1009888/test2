@@ -19,7 +19,7 @@ public class PatientController {
     @ApiOperation("查询患者信息（医保专用）111")
     @PostMapping("/getPatientById")
     public String getByYb(){
-        return "恭喜你查询到患者信息（医保专用）";
+        return "恭喜你查询到患者信息";
     }
 
 
