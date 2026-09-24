@@ -1,0 +1,5 @@
+db:
+  mysql:
+    url: jdbc:mysql://localhost:3306/yoga?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&allowMultiQueries=true&serverTimezone=GMT%2b8&useSSL=false&autoReconnect=true&failOverReadOnly=false&rewriteBatchedStatements=true
+    username: root
+    password: root
